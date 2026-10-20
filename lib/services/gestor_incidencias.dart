@@ -7,7 +7,7 @@ class GestorIncidencias {
 
   Future<void> iniciar() async {
     incidencias = await datos.leer();
-  }
+  } 
 
   List<Incidencia> buscar(String texto) {
     final consulta = texto.trim().toLowerCase();
