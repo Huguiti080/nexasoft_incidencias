@@ -42,6 +42,14 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
     return const Color(0xFFAC4052);
   }
 
+  Color colorPrioridad(Prioridad prioridad) {
+    return switch (prioridad) {
+      Prioridad.baja => const Color(0xFF147D64),
+      Prioridad.media => const Color(0xFFB56B13),
+      Prioridad.alta => const Color(0xFFAC4052),
+    };
+  }
+
   Widget resumen(String etiqueta, String valor, IconData icono) {
     return Expanded(
       child: Card(
@@ -190,6 +198,12 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                                               Text(item.estado, style: TextStyle(
                                                 color: colorEstado(item.estado), fontWeight: FontWeight.bold,
                                               )),
+                                              const SizedBox(height: 4),
+                                              Text('Prioridad: ${item.prioridad.etiqueta}',
+                                                  style: TextStyle(
+                                                    color: colorPrioridad(item.prioridad),
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
                                             ],
                                           ),
                                         ),
