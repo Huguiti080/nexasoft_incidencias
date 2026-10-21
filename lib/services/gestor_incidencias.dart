@@ -9,15 +9,23 @@ class GestorIncidencias {
     incidencias = await datos.leer();
   } 
 
-  List<Incidencia> buscar(String texto) {
+  List<Incidencia> filtrar ({
+    String texto = '',
+    String? estado,
+    Prioridad? prioridad,
+  }) {
     final consulta = texto.trim().toLowerCase();
-    if (consulta.isEmpty) return incidencias;
-    return incidencias
-        .where((x) =>
-            x.titulo.toLowerCase().contains(consulta) ||
-            x.descripcion.toLowerCase().contains(consulta))
-        .toList();
+    return incidencias.where((x) {
+      final coincideTexto = consulta.isEmpty ||
+          x.titulo.toLowerCase().contains(consulta) ||
+          x.descripcion.toLowerCase().contains(consulta);
+      final coincideEstado = estado == null || x.estado == estado;
+      final coincidePrioridad = prioridad == null || x.prioridad == prioridad;
+      return coincideTexto && coincideEstado && coincidePrioridad;
+    }).toList();
   }
+
+  List<Incidencia> buscar(String texto) => filtrar(texto: texto);
 
   Incidencia? porId(String id) {
     for (var x in incidencias) {
@@ -57,7 +65,7 @@ class GestorIncidencias {
       descripcion: descripcion,
       cliente: cliente,
       categoria: categoria,
-      estado: 'Pendiente',
+      estado: EstadoIncidencia.pendiente,
       fecha: DateTime.now().toIso8601String().split('T').first,
       prioridad: prioridad,
     );

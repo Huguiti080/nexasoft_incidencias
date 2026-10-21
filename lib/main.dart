@@ -17,10 +17,10 @@ class NexaSoftApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF174C83)),
-        scaffoldBackgroundColor: const Color.fromARGB(255, 202, 219, 244),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 253, 253, 255),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 8, 0, 128),
-          foregroundColor: Color.fromARGB(255, 248, 219, 219),
+          backgroundColor: Color.fromARGB(255, 81, 85, 97),
+          foregroundColor: Color.fromARGB(255, 253, 252, 252),
           centerTitle: false,
         ),
       ),

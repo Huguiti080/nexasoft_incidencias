@@ -95,7 +95,7 @@ class _PantallaDetalleState extends State<PantallaDetalle> {
                     ),
                     const SizedBox(height: 14),
                     DropdownButtonFormField<Prioridad>(
-                      value: item.prioridad,
+                      initialValue: item.prioridad,
                       decoration: const InputDecoration(labelText: 'Prioridad', border: OutlineInputBorder()),
                       items: Prioridad.values
                           .map((p) => DropdownMenuItem(value: p, child: Text(p.etiqueta)))

@@ -18,6 +18,27 @@ enum Prioridad {
   }
 }
 
+/// Etiquetas canónicas del estado. Mantener el campo `Incidencia.estado`
+/// como String para no romper persistencia ni el tablero (BUG-003).
+class EstadoIncidencia {
+  static const pendiente = 'Pendiente';
+  static const enProceso = 'En proceso';
+  static const resuelta = 'Resuelta';
+
+  static const todos = [pendiente, enProceso, resuelta];
+
+  /// Normaliza cualquier variante guardada ('pendiente', 'EN PROCESO', etc.)
+  /// a la etiqueta canónica. Si no reconoce, devuelve `pendiente`.
+  static String normalizar(String? valor) {
+    final v = valor?.trim().toLowerCase() ?? '';
+    return switch (v) {
+      'en proceso' || 'enproceso' || 'en_proceso' => enProceso,
+      'resuelta' || 'resuelto' => resuelta,
+      _ => pendiente,
+    };
+  }
+}
+
 class Incidencia {
   String id;
   String titulo;
@@ -46,7 +67,7 @@ class Incidencia {
       descripcion: m['descripcion']?.toString() ?? '',
       cliente: m['cliente']?.toString() ?? '',
       categoria: m['categoria']?.toString() ?? 'Software',
-      estado: m['estado']?.toString() ?? 'Pendiente',
+      estado: EstadoIncidencia.normalizar(m['estado']?.toString()),
       fecha: m['fecha']?.toString() ?? '',
       prioridad: Prioridad.desdeJson(m['prioridad']),
     );
